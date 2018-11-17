@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+		#main{
+			background: skyblue;
+			border: 1px red solid;
+		}
+		
+		.bg-color{
+			background-color: red;
+		}
+		.text-color{
+			color: white;
+		}
+		
+		/*span{
+			border: 1px green solid;
+		}*/
+		
+		#main2 > span{
+			border: 1px red solid;
+		}
+		</style>
+	</head>
+	<body>
+
+	<!--1.id选择器-->
+	<!--<div id="main" class="text-color">
+		main
+	</div>-->
+	
+	<!--2.类选择器-->
+	<!--<span class="bg-color text-color">aaa</span>
+	<span class="bg-color">bbb</span>
+	<span class="bg-color">ccc</span>-->
+	
+	<!--4.后代选择器-->
+	<div id="main2">
+		<span>
+			aaa
+			<span>a1</span>
+		</span>
+		<span>a2</span>
+		<span>a3</span>
+		<span>a4</span>
+		<span>a5</span>
+		<span>a6</span>
+		<span>a7</span>
+		<span>a8</span>
+	</div>
+	
+	</body>
+</html>
