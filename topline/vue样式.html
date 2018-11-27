@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+		
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		
+		<!-- 生产环境版本，优化了尺寸和速度 -->
+		<!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+		<style type="text/css">
+			.header{
+				background: pink;
+			}
+			.big{
+				font-size: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			
+			<h1 :style="objStyle">{{message}}</h1>
+			
+			<h1 :style="{background:color}" style="font-size: 150px;">天空蓝</h1>
+			
+			<h1 class="big " class="header"></h1>
+			
+			<h1 :class="h1class" class="header">已经有class</h1>
+			
+			<h1 :class="['big','textcenter']" class="header">已经有class</h1>
+			<h1 :class="arrObj" class="header">已经有class</h1>
+			<h1 :class="{big:isShow,textcenter:true}" class="header">已经有class</h1>
+			<h1 :class="classObj" class="header">已经有class</h1>
+			
+			
+			
+			
+			<!--
+				1/背景是红字，字体100px
+				2/背景是红色
+				3/字体100px
+			-->
+			
+			
+		</div>
+		
+		<!--
+			侦听器：就是用来监听数据是否发生改变，如果发生更改，就会触发这个相对应的侦听器函数，函数默认会携带2个参数，一个是新值，一个是老值
+			
+		-->
+		<script type="text/javascript">
+			var app = new Vue({
+				el: "#app",//element
+				data:{//model数据
+					message:"helloworld",
+					objStyle:{},
+					color:'skyblue',
+					h1class:'big',
+					arrObj:['big','textcenter'],
+					isShow:true,
+					classObj:{
+						//key:true/false
+						big:true,
+						textcenter:false
+					}
+				}
+			})
+			
+			
+			
+			
+			
+		</script>
+		
+		
+	</body>
+</html>

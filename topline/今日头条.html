@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery-1.11.0.js"></script>
+		<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <link rel="stylesheet" href="css\font-awesome-4.7.0\css\font-awesome.min.css">
+		
+		<!-- 生产环境版本，优化了尺寸和速度 -->
+		<!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+        <script src="js/contentCom.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/headerCom.js"  type="text/javascript" charset="utf-8"></script>
+    </head>
+    <script type="text/javascript">
+        (function(){
+            var screenWidth = window.innerWidth
+            var remWidth = screenWidth/7.5
+            var html = document.querySelector('html')
+            html.style.fontSize = remWidth +'px';
+            
+            
+            
+            window.onresize = function(){
+                var screenWidth = window.innerWidth
+                var remWidth = screenWidth/7.5
+                var html = document.querySelector('html')
+                html.style.fontSize = remWidth +'px';
+            }
+            
+            // 1rem为25p'x
+        })()
+    </script>
+    <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            #_nav{
+                width: 100%;
+                height:1.7rem;
+                background-color:lightgray;
+                font-size: 0.3rem;
+                display: block;
+            }
+            #_nav-a{
+                width: 7.5rem;
+                height: 0.5rem;
+                overflow:scroll;
+    
+            }
+            #_nav-a div{
+                width: 20rem;
+                height: 0.7rem;
+            }
+            #_nav a{
+                text-decoration: none;
+                margin: 0.1rem;
+                padding: 0 0.2rem;
+                color: black;
+                float: left;
+            }
+            #_nav-b{
+                width:7.5rem;
+                height: 1rem;
+                background-color:rgba(216, 51, 29, 0.877);
+                font-size: 0.5rem;
+                position: relative;
+            }
+            #_nav-b div ,button{
+                position: absolute;
+                width: 0.5rem;
+                line-height: 1rem;      
+                text-align: center;   
+                font-weight: 300;
+                font-size: 0.36rem;
+                color: white;
+            }
+            #_nav-b div:nth-child(1){
+                top:0rem;
+                left: 4.5rem;
+            }
+            #_nav-b div:nth-child(2){
+                top:0rem;
+                left: 0.1rem;
+            }
+            #_nav-b div:nth-child(3){
+                height: 0.5rem;
+                width: 2rem;
+                top:0.25rem;
+                left: 2.5rem;
+                background-image: url("https://s3b.pstatp.com/growth/mobile_list/image/wap_logo@3x_581de69e.png");
+                background-position: center center;
+                background-size:100%;
+            }
+            button{
+                top:0rem;
+                right:0.1rem;
+                border: none;
+                background-color:rgba(216, 51, 29, 0) ;
+    
+            }
+            #flexlow{
+                position: absolute;
+                top: 1rem;
+                right:0rem;
+                width: 0.7rem;
+                height: 0.7rem;
+                background-color:darkgrey;
+                z-index: 999;
+                font-size: 0.36rem;
+                text-align: center;
+                line-height: 0.7rem
+            }
+            .search{
+                background: #f4f4f4;
+                width: 7.1rem;
+                height: 1rem;
+                padding: 0.25rem 0.2rem;
+                position: relative;
+            }
+            .search input{
+                position:absolute;
+                width: 1.5rem;
+                height: 0.83rem;
+                right: 0.25rem;
+                font-size: 0.4rem;
+                
+            }
+            .search .input1{
+                position: absolute;
+                width: 5.4rem;
+                padding-left: 0.2rem;
+                height: 0.8rem;
+                left: 0.22rem;
+            }
+            .newItem, .pageItem {
+               border-top: darkseagreen 0.01rem solid; 
+               padding: 0.2rem;
+            }
+            .newsList img{
+               width: 5rem;
+               height: 3.5em;
+            }
+            .newItem p,.pageItem p{
+                font-size: 0.12rem;
+                color: black;   
+                font-weight: 400;
+               
+            }
+            .newsList h5,.pageItem{
+                font-size: 0.05rem
+            }
+            .article button{
+                background-color: #fff;
+                color: black;
+                width: 2rem;
+                height: 1rem;
+            }
+            .back {
+                padding: 0.1rem;
+                font-size: 0.5rem;
+                margin-left: 0.1rem;
+            }
+            .pageItem img{
+                width: 5rem;
+                height: 3rem;
+            }
+         
+    </style>
+	<body >
+		<div id="app" @click="textimg" >
+            
+            <headercom v-if="isshow"></headercom>
+
+            <button  v-if="isshow" @click="clicksec"  ><i class="fa fa-search" aria-hidden="true"  ></i></button>
+            <div class="todayList" v-if="isshow">
+					<div class="pageItem" v-for="item,key in todayList" :key="key">
+						<p>{{item.title}}</p>
+						<img v-if="item.image_url" :src="item.image_url"/>
+						<h5>网上获取的数据</h5>
+					</div>
+					
+             </div>
+            <div class="main" v-show="!isShow">
+				<div class="search">
+                    <input type="text" name="search" id="search" v-model="searchKeyword" @keydown.enter="search" value=""  v-if="!isshow" class="input1"/>
+                    <input type="submit" value="搜索" v-if="!isshow"  @click="search"/>
+				</div>
+				
+				<div class="newsList">
+					<div class="newItem" v-for="item,key in newsList" @click="toContent(item.source_url)" :key="key">
+						<p>{{item.title}}</p>
+						<img v-if="item.image_url" :src="item.image_url"/>
+						<h5>网上获取的数据</h5>
+					</div>
+					
+                </div>
+               
+            </div>
+            
+			<contentl v-if="isShow" :abc="imgsUrl" ></contentl>
+		</div>
+		
+		<script type="text/javascript">
+			
+			var app = new Vue({
+				el: "#app",//element
+                data:{//model数据
+                    todayList:[],
+					newsList:[],
+					searchKeyword:"",
+                    isShow:false,
+                    isshow:true,
+					imgsUrl:""
+				},
+				methods:{//放置事件
+					search:function(){
+						var that = this
+						$.ajax({
+							type:"get",
+							url:"http://127.0.0.1:8000?search="+that.searchKeyword,
+							async:true,
+							success:function(res){
+								console.log(JSON.parse(res))
+                                that.newsList = JSON.parse(res).data
+							}
+						});
+						
+					},
+					toContent:function(url){
+                        console.log(url)
+                        this.imgsUrl = 'http://www.toutiao.com'+url
+                        console.log(this.imgsUrl)
+                        console.log('123')
+                        this.isShow = true
+                    },
+                    clicksec:function(){
+                        app.isshow= false
+                    },
+                    textimg:function(e){
+                        var that = this
+                        console.log(this)
+        
+                        var urll="http://127.0.0.1:8000?search="
+                        $.ajax({
+                            type:"get",
+                            url:"http://127.0.0.1:8000?search="+urll,
+                            async:true,
+                            success:function(res){
+                                console.log(JSON.parse(res))
+                                that.todayList = JSON.parse(res).data
+                            }
+                        });
+                        
+                    }
+				},
+				
+			// 注册组件
+				components:{
+                    contentl:contentCom,
+                    headercom:headerCom ,//导航栏,
+                    // article:articleCom
+				}
+			
+				
+				
+			})
+			
+			
+		</script>
+		
+		
+	</body>
+</html>
