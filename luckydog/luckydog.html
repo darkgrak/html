@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lucky DOG</title>
+    <style>
+        #canvas1{
+            display: block;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+        #main{
+            position:absolute;
+            width:400px;
+            height: 400px;
+            background-image: url("img/1369.png_300.jpg");
+            background-size:cover;
+            top: 50px;
+            left: calc(50% - 200px);  /*减号两边一定要加空格 */
+            z-index: -1;
+            color: black;
+            
+        }
+        #ones,#twos,#rest{
+            position: absolute;
+            width: 200px;
+            height: 40px;
+            line-height: 50px;
+            border-radius:5px; 
+            /* background:pink; */
+            top: 78px;
+            left: 90px;
+        }
+        #twos{
+            position: absolute;
+            top: 178px;
+            left: 90px;
+        }
+        #rest{
+            position: absolute;
+            top: 278px;
+            left: 90px;
+        }
+        input{
+            position:absolute;
+            margin-top:20px; 
+            left: calc(50% - 40px);
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            background:orangered;
+            color: aliceblue;
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="canvas1" width="400" height="400"></canvas>
+    <div id="main">
+        <div id="ones">没抽中，请客看电影</div>
+        <div id="twos">1/121的概率，请客吃饭</div>
+        <div id="rest">11的立方分之一，请客唱歌</div>
+    </div>
+    <input type="submit" value="刷新">
+    <script>
+        var Canvas = document.querySelector("#canvas1")
+        var Ones = document.querySelector("#ones")
+        var Twos = document.querySelector("#twos")
+        var Rest = document.querySelector("#rest")
+        var Main = document.querySelector("#main")
+        var Input = document.querySelector("input")
+        
+        var ctx = Canvas.getContext("2d")
+        var img = new Image()
+        img.src = "img/1369.png_300.jpg"
+        img.onload = function(){
+            ctx.drawImage(img,0,0,400,400)
+            ctx.beginPath()
+            ctx.font = "16px 微软雅黑 "
+            ctx.fillStyle = 'pink'
+            ctx.fillText("第一位:",5,105)
+            ctx.stroke()
+            ctx.closePath()
+            ctx.restore()
+            ctx.save()
+
+            ctx.beginPath()
+            ctx.font = "16px 微软雅黑 "
+            ctx.fillStyle = 'skyblue'
+            ctx.fillText("第二位：",5,205)
+            ctx.stroke()
+            ctx.closePath()
+            ctx.restore()
+            ctx.save()
+
+            ctx.beginPath()
+            ctx.lineWidth = 2
+            ctx.font = "16px 微软雅黑 "
+            ctx.fillStyle = 'gold'
+            ctx.fillText("第三位：",5,305)
+            ctx.stroke()
+            ctx.closePath()
+            ctx.restore()
+            ctx.save()
+        }
+
+        // 创建图片对象
+        var arr1 = new Array()
+        arr1 = ["曾湘健","陈文彬","邝展辉","严仕清","刘毅","李郁康","陈泽念","覃凤","覃诗茵","未抽中，抬走下一位"]
+        var arr2 = new Array()
+        arr2 = ["曾湘健","陈文彬","邝展辉","严仕清","刘毅","李郁康","陈泽念","覃凤","覃诗茵","1/100，请客&dine"]
+        var arr3 = new Array()
+        arr3 = ["曾湘健","陈文彬","邝展辉","严仕清","刘毅","李郁康","陈泽念","覃凤","覃诗茵","1/1000，请客&movie"]
+        
+        var rando1 = parseInt(Math.random()*(10-0))
+        var rando2 = parseInt(Math.random()*(10-0))
+        var rando3 = parseInt(Math.random()*(10-0))
+        console.log(rando1)
+        console.log(rando2)
+        console.log(rando3)
+        Ones.innerHTML = ""+arr1[rando1]+""
+        Twos.innerHTML = ""+arr2[rando2]+""
+        Rest.innerHTML = ""+arr3[rando3]+""
+
+      
+        isDraw = false
+        Canvas.onmousedown = function(){
+            isDraw = true
+        }
+        Canvas.onmouseup = function(){
+            isDraw = false
+        }
+    
+        Canvas.onmousemove = function(e){
+            if(isDraw){
+                console.log(e)
+				console.log([this])
+                ctx.globalCompositeOperation = 'destination-out'
+                // 叠加消除原图像
+                ctx.beginPath()
+				ctx.arc(e.clientX-this.offsetLeft,e.clientY-this.offsetTop,20,0,2*Math.PI)
+					
+                ctx.fill()
+				ctx.closePath()
+            }
+        }
+        Input.onclick = function(){
+            document.location.reload()
+        }
+    </script>
+</body>
+</html>
